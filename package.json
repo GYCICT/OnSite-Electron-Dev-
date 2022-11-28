@@ -1,19 +1,29 @@
 {
   "name": "onsite-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Onsite Electron App",
   "main": "index.js",
   "author": "George Dellas",
-  "license": "MIT",
+  "license": "GPL3",
+  "repo": "https://github.com/gorgdel/onsite-electron",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder --win --linux -p always"
   },
   "devDependencies": {
     "electron": "^19.0.0",
-    "electron-builder": "^23.6.0"
+    "electron-builder": "^23.6.0",
+    "electron-updater": "^5.3.0"
   },
   "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "gorgdel",
+        "repo": "onsite-electron",
+        "private": true
+      }
+    ],
     "appId": "onsite.client",
     "icon": "img/gyc.ico",
     "productName": "Onsite Client",
@@ -27,6 +37,9 @@
       "executableName": "onsite-client",
       "target": "AppImage",
       "icon": "img/gyc.png",
+      "publish": [
+        "github"
+      ],
       "desktop": {
         "Name": "Onsite Client",
         "Comment": "Onsite Client",
