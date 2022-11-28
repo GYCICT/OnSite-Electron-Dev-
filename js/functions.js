@@ -368,18 +368,19 @@ function signout(data, event) {
             success: function (result) {
                 if (result == true) {
                     // Redirect
-                    setTimeout(function () { window.location.href = "/"; }, 2000);
+                    setTimeout(function () { location.reload()}, 2000);
                 } else {
-                    console.log(`Would've worked and sent https://onsitedev.gyc.tas.edu.au/api/2.0/studentsignout?id=${StudentID}&siteid=2&reason=${ReasonID}&reasontext=${ReasonText}`);
                     // hide the form
-                    document.getElementById("form").hidden = true;
+                    createLog(result)
+                    document.getElementById("success").hidden = true;
                     // show the success message
+                    document.getElementById("form").hidden = true;
                     document.getElementById("fail").hidden = false;
                     // set the text 
                     document.getElementById("message-text").innerHTML = `
                     <p> An Error has occured. Please try again Later. </p>`
                     // Redirect to the home page
-                    setTimeout(function () { window.location.href = "/"; }, 2000);
+                    setTimeout(function () { location.reload() }, 2000);
                 }
             }
         });
@@ -414,10 +415,12 @@ function Late(data){
                         document.getElementById("message-text").innerHTML = `
                         <p>Successfully signed in <a style="color: blue;">${StudentName}</a>`
                         // Redirect
-                        setTimeout(function () { window.location.href = "/"; }, 2000);
+                        setTimeout(function () { location.reload()}, 2000);
                     } else {
                         console.log(`Would've worked and sent https://onsitedev.gyc.tas.edu.au/api/2.0/studentLate?id=${StudentID}&reason=${ReasonID}`);
                         // hide the form
+                        createLog(result)
+                        document.getElementById("success").hidden = true;
                         document.getElementById("form").hidden = true;
                         // show the success message
                         document.getElementById("fail").hidden = false;
@@ -425,7 +428,7 @@ function Late(data){
                         document.getElementById("message-text").innerHTML = `
                         <p> An Error has occured. Please try again Later. </p>`
                         // Redirect to the home page
-                        setTimeout(function () { window.location.href = "/"; }, 2000);
+                        setTimeout(function () { location.reload()}, 2000);
                     }
                 }
             });
@@ -448,9 +451,14 @@ function signin(){
         // log the response
         success: function (result) {
             if (result == true) {
-                setTimeout(function () { window.location.href = "/"; }, 3000);
+                // add directory
+                setTimeout(function () { location.reload()}, 3000);
             } else {
                 // hide the form
+                // disable success message
+                // Create a log
+                createLog(result)
+                document.getElementById("success").hidden = true;
                 document.getElementById("form").hidden = true;
                 // show the success message
                 document.getElementById("fail").hidden = false;
@@ -458,7 +466,7 @@ function signin(){
                 document.getElementById("message-text").innerHTML = `
                 <p> An Error has occured. Please try again Later. </p>`
                 // Redirect to the home page
-                setTimeout(function () { window.location.href = "/"; }, 3000);
+                setTimeout(function () { location.reload()}, 3000);
             }
         }
     });
@@ -480,4 +488,24 @@ function success(StudentName, action){
     // Set the text
     document.getElementById("message-text").innerHTML = `
     <p>Successfully ${action} <a style="color: #00A4E0;">${StudentName}</a>`
+}
+
+function createLog(log){
+    // Save the log to local storage
+    // local datetime
+    
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    let milliseconds = date.getMilliseconds();
+
+    // random number
+    // make a random log id
+
+    let datetime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    localStorage.setItem(`log-${datetime}-${milliseconds}`, JSON.stringify(log));
 }
