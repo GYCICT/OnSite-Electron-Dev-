@@ -7,8 +7,8 @@ const { autoUpdater } = require('electron-updater');
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1520,
+    height: 900,
     autoHideMenuBar: true,
   });
 
