@@ -23,6 +23,16 @@
     "win": {
       "target": "nsis"
     },
+    "linux": {
+      "executableName": "onsite-client",
+      "target": "AppImage",
+      "icon": "img/gyc.png",
+      "desktop": {
+        "Name": "Onsite Client",
+        "Comment": "Onsite Client",
+        "Categories": "Utility;"
+      }
+    },
     "nsis": {
       "oneClick": false,
       "installerIcon": "img/gyc.ico",
