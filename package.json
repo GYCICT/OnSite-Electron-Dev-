@@ -1,0 +1,38 @@
+{
+  "name": "onsite-client",
+  "version": "1.0.0",
+  "description": "Onsite Electron App",
+  "main": "index.js",
+  "author": "George Dellas",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^19.0.0",
+    "electron-builder": "^23.6.0"
+  },
+  "build": {
+    "appId": "onsite.client",
+    "icon": "img/gyc.ico",
+    "productName": "Onsite Client",
+    "directories": {
+      "output": "build"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "img/gyc.ico",
+      "uninstallerIcon": "img/gyc.ico",
+      "uninstallDisplayName": "Onsite Client",
+      "license": "license.md",
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "dependencies": {
+    "electron-packager": "^17.1.1"
+  }
+}
