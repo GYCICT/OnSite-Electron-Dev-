@@ -1,7 +1,6 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 // Send a message to the main process
-
 
 
 const createWindow = () => {
@@ -9,10 +8,15 @@ const createWindow = () => {
     width: 1520,
     height: 900,
     autoHideMenuBar: true,
+    fullscreen: true,
   });
 
   win.loadFile('index.html');
+
+
 };
+
+
 
 app.whenReady().then(() => {
   createWindow();
@@ -33,19 +37,33 @@ app.on('window-all-closed', () => {
 autoUpdater.checkForUpdatesAndNotify();
 
 autoUpdater.on('update-available', () => {
-  win.webContents.send('update_available');
+// show a dialog that lasts 3 seconds
+  setTimeout(() => {
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Update available',
+      message: 'A new update is available. It will be downloaded in the background',
+    });
+  }, 3000);
 });
 
 autoUpdater.on('update-downloaded', () => {
-  win.webContents.send('update_downloaded');
+    setImmediate(() => autoUpdater.quitAndInstall(isSilent = true, isForceRunAfter = true));
 });
 
-autoUpdater.quitAndInstall();
 
 autoUpdater.on('error', (message) => {
   console.error('There was a problem updating the application');
   console.error(message);
 });
+
+setInterval(() => {
+  console.log('Checking for updates...');
+  autoUpdater.checkForUpdates();
+}
+, 60000);
+
+
 
 
 
