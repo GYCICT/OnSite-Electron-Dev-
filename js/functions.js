@@ -509,3 +509,29 @@ function createLog(log){
     let datetime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
     localStorage.setItem(`log-${datetime}-${milliseconds}`, JSON.stringify(log));
 }
+
+function heartBeat(){
+    // check if the user is still logged in
+
+    let data = {
+        "session_id": localStorage.getItem('sessionID'),
+        "sitename": localStorage.getItem('siteName'),
+        "version": localStorage.getItem('version')
+    }
+
+
+    $.ajax({
+        url: `https://onsitedev.gyc.tas.edu.au/api/2.0/heartbeat.php`,
+        method: "POST",
+        headers: {
+            "session_id": localStorage.getItem('sessionID')
+        },
+        data: data,
+        // console log the response
+        success: function (result) {
+            console.log(result);
+        }
+    });
+
+    
+}

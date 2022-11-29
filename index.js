@@ -14,9 +14,10 @@ const createWindow = () => {
   win.loadFile('index.html');
 
   let updateVersion = `
-  let  v = document.getElementById('version');
-  v.innerHTML = 'v${app.getVersion()}';
-  console.log('v${app.getVersion()}');
+  let v = document.getElementById('version');
+  const version = 'v${app.getVersion()}';
+  v.innerHTML = version;
+  localStorage.setItem('version', version);
   `;
 
   win.webContents.executeJavaScript(updateVersion);
