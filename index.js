@@ -22,6 +22,15 @@ const createWindow = () => {
 
   win.webContents.executeJavaScript(updateVersion);
 
+
+  setInterval(() => {
+    autoUpdater.checkForUpdates();
+    win.webContents.executeJavaScript('console.log("Checking for updates...")');
+    
+  }
+  , 60000);
+
+
 };
 
 
@@ -65,11 +74,6 @@ autoUpdater.on('error', (message) => {
   console.error(message);
 });
 
-setInterval(() => {
-  console.log('Checking for updates...');
-  autoUpdater.checkForUpdates();
-}
-, 60000);
 
 
 

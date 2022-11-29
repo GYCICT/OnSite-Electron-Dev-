@@ -516,7 +516,8 @@ function heartBeat(){
     let data = {
         "session_id": localStorage.getItem('sessionID'),
         "sitename": localStorage.getItem('siteName'),
-        "version": localStorage.getItem('version')
+        "version": localStorage.getItem('version'),
+        "user_agent": navigator.userAgent,
     }
 
 
@@ -529,6 +530,8 @@ function heartBeat(){
         data: data,
         // console log the response
         success: function (result) {
+            console.log(result);
+        }, error: function (result) {
             console.log(result);
         }
     });
