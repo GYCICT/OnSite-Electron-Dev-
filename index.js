@@ -13,6 +13,13 @@ const createWindow = () => {
 
   win.loadFile('index.html');
 
+  let updateVersion = `
+  let  v = document.getElementById('version');
+  v.innerHTML = 'v${app.getVersion()}';
+  console.log('v${app.getVersion()}');
+  `;
+
+  win.webContents.executeJavaScript(updateVersion);
 
 };
 
@@ -62,7 +69,6 @@ setInterval(() => {
   autoUpdater.checkForUpdates();
 }
 , 60000);
-
 
 
 

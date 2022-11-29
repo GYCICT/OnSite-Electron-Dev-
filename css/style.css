@@ -149,3 +149,7 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+
+.footer {
+  padding: 10px
+}
