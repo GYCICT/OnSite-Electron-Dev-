@@ -4,7 +4,6 @@ const { autoUpdater } = require('electron-updater');
 
 
 
-
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 1520,
@@ -34,22 +33,14 @@ app.on('window-all-closed', () => {
 autoUpdater.checkForUpdatesAndNotify();
 
 autoUpdater.on('update-available', () => {
-  const dialogOpts = {
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: 'A new version has been found. Restart the application to apply the updates.',
-  };
+  win.webContents.send('update_available');
 });
 
 autoUpdater.on('update-downloaded', () => {
-  const dialogOpts = {
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: 'Update downloaded. Restart the application to apply the updates.',
-  };
+  win.webContents.send('update_downloaded');
 });
+
+autoUpdater.quitAndInstall();
 
 autoUpdater.on('error', (message) => {
   console.error('There was a problem updating the application');
