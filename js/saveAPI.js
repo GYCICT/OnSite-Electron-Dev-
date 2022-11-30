@@ -8,7 +8,6 @@ var error = new UIChanger('error');
 var success_text = new UIChanger('successmsg');
 var siteID = new UIChanger('campus');
 
-
 function auth(){
     let key = document.getElementById('LoginPassword').value;
     // Make the expiry date 2 years from now
@@ -43,6 +42,7 @@ function auth(){
                 // Show the success message and wait 2 seconds before redirecting
                 success_text.show();
                 // reload
+                heartBeat();
                 location.reload();
             }
 }

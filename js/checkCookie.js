@@ -1,24 +1,29 @@
 function validate_cookie() {
+    $('#loginModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    
+    
+    $('#campus').select2({
+        placeholder: 'Select a campus',
+        theme: 'bootstrap4',
+        dropdownParent: $('#loginModal')
+    });
+    
+    
     session_id = localStorage.getItem('sessionID');
     // Check for cookie
-    if (!session_id) {
-        $('#loginModal').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-
-        // Create the selector for the siteID dropdown
-        $('#campus').select2({
-            placeholder: 'Select a campus',
-            theme: 'bootstrap4',
-            dropdownParent: $('#loginModal')
-        });
-
-        // Get the list of sites from the API
-        
+    if (!session_id) {    
+    
 
         $('#loginModal').modal('show');
     }
+
+
+
+
+
 
     $.ajax({
         url: 'https://onsitedev.gyc.tas.edu.au/i.php',
