@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <script src="js/jquery.js"></script>
     <script src="js/ui.js"></script>
-    <script src="js/functions.js"></script>
-    <script src="js/checkCookie.js"></script>
+    <script defer src="js/functions.js"></script>
+    <script defer src="js/checkCookie.js"></script>
     <script src="js/saveAPI.js"></script>
     <script src="js/js.cookie.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -20,7 +20,7 @@
     <script src="https://kit.fontawesome.com/cd0095468a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://onsitedev.gyc.tas.edu.au/css/style.css">
     <link rel="stylesheet" href="https://onsitedev.gyc.tas.edu.au/css/style2.css">
     <meta charset="UTF-8">
     <!-- icon -->
@@ -32,7 +32,7 @@
 
 
 
-<body onload="cleanURL();student();validate_cookie();">
+<body onload="checkConnectivity();cleanURL();student();validate_cookie();">
     <header>
         <div class="header">
             <div class="logo">
@@ -80,7 +80,8 @@
                     <form>
                         <!-- <input class="chosen-value" type="text" id="search" autocomplete="off" oninput="student(this.value)" placeholder="Search"> -->
                         <br><br><br>
-                        <select id="selector" class="selector-class" oninput="student_actions_show(this.value)">
+                        <p id="selector_error"></p>
+                        <select id="selector" class="selector-class" oninput="student_actions_show(this.value)" hidden>
                             <option></option>
                         </select>
                     </form>
@@ -124,8 +125,8 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="loginModalLabel">Login</h5>
             </div>
-            <div class="modal-body" style="margin-top: -50px;">
-                <form>
+            <div class="modal-body" style="margin-top: -80px;">
+                <form id="loginForm">
                     <div class="mb-3">
                         <!-- Select campus -->
                         <label for="campus" class="form-label">Campus</label>
@@ -156,7 +157,7 @@
 
     <footer>
         <div class="footer">
-            <div class="footer-text" id="version">
+            <div class="footer-text" style="padding:10px;" id="version">
                 <p></p>
             </div>
         </div>
@@ -167,11 +168,23 @@
             $(this).scrollTop(0);
         });
 
+        $('#loginForm').on('submit', function(e) {
+            e.preventDefault();
+            auth();
+        });
+        
+
+        document.getElementById("version").innerHTML = localStorage.getItem("version");
+    
+
         // Call on page load, then every 5 minutes
         setInterval(function() {
-           heartBeat();
-           console.log("Heartbeat sent");
+        heartBeat();
+        console.log("Heartbeat sent");
+        console.log("checking connectivity")
+        checkConnectivity();
         }, 300000);
+
 
     </script>
 </body>

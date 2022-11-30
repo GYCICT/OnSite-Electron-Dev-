@@ -1,6 +1,8 @@
 // User Selector Options
 var user_selector = new UIChanger('user-selector');
 var selector = new UIChanger('selector');
+var selector_error = new UIChanger('selector_error');
+
 // Student Actions
 var student_actions = new UIChanger('student-actions');
 // Reason Selector
@@ -16,8 +18,67 @@ var user_details = new UIChanger('user-details');
 
 var refresh_btn = new UIChanger('refresh-symbol');
 
+// if onsite cannot be reached, stop loading the page and show the error message
+function checkConnectivity(retry) {
+    // Check if the server is online
+    $.ajax({
+        url: 'https://onsitedev.gyc.tas.edu.au/',
+        type: 'GET',
+        success: function () {
+            // If the server is online
+            // Show the page
+            console.log('Onsite is connected')
+            if (retry == true) {
+                location.reload();
+            }
+        }
+    }).fail(function () {
+        console.log('Onsite is disconnected')
+        // Remove the body element
+        document.querySelector('body').remove();
+        // Create a new body, append it to the html
+        let body = document.createElement('body');
+        document.querySelector('html').appendChild(body);
 
-function student_actions_show(id){
+        // Create a new div, append it to the body
+        let modal = `
+        <div class="modal fade" id="connectError" tabindex="-1" role="dialog" aria-labelledby="connectErrorLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="connectErrorLabel">⚠️ Error - Unable to connect ⚠️</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>OnSite is unable to connect to the server. Please check your internet connection and try again.</p>
+                        <p>If the problem persists, please contact the IT department.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="checkConnectivity(true)">Retry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+
+        body.innerHTML = modal;
+        $('#connectError').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+        $('#connectError').modal('show');
+
+
+        // Prevent escaping the modal
+        
+
+
+
+
+    }
+    );
+}
+
+function student_actions_show(id) {
     // This function returns the values for the student functions
     // Get the student ID
     // Call the API using the student ID
@@ -40,22 +101,22 @@ function student_actions_show(id){
             // for loop using length of array
             let options = ''
             for (i = 0; i < result.length; i++) {
-            // Generate buttons for each signout
-            // remove spacing 
-            if (result[i] == 'Sign Out' || 'Sign In') {
-                id_name = result[i].replace(/\s/g, '');
-                options += `<button type="button" class="btn btn-primary btn-lg btn-bounce" id="${id_name}" onclick="UI_selector('${id_name}')">${result[i]}</button>`;
+                // Generate buttons for each signout
+                // remove spacing 
+                if (result[i] == 'Sign Out' || 'Sign In') {
+                    id_name = result[i].replace(/\s/g, '');
+                    options += `<button type="button" class="btn btn-primary btn-lg btn-bounce" id="${id_name}" onclick="UI_selector('${id_name}')">${result[i]}</button>`;
+                }
+
             }
-            
+            // Show the buttons
+            student_actions.show();
+            student_actions.setHTML(options);
+
+            document.getElementById('spinner').hidden = true;
+
         }
-        // Show the buttons
-        student_actions.show();
-        student_actions.setHTML(options);
-
-        document.getElementById('spinner').hidden = true;
-
-    }
-});
+    });
 }
 
 function student() {
@@ -85,14 +146,20 @@ function student() {
                 placeholder: "Select a student",
                 theme: "bootstrap4"
             });
+        }, 
+        error: function(){
+            createLog('student() failed')
+            selector_error.setHTML('An Error has occured - Students could not be loaded <br> Refresh the page and try again.')
+
         }
+    
     });
 }
 
 function UI_selector(bool) {
     // show back
 
-    if (bool == 'SignIn'){
+    if (bool == 'SignIn') {
         signin();
     }
 
@@ -115,7 +182,7 @@ function UI_selector(bool) {
         next_btn.hide();
         yes_btn.hide();
         user_details.hide();
-        
+
         // Clean the URL
         cleanURL();
     } else if (bool == 'signout-complete') {
@@ -149,7 +216,7 @@ function UI_selector(bool) {
         student_actions.removeClass('d-none');
         // Hide Submit
         submit_btn.hide();
-                
+
     }
 
     // If button is clicked then hide the search and show the reasons
@@ -182,37 +249,37 @@ function UI_selector(bool) {
 
             {
                 type: 'Late',
-                ReasonID : 20,
+                ReasonID: 20,
                 Description: "Other"
-              },
-              {
+            },
+            {
                 type: 'Late',
                 ReasonID: 21,
-                Description : "Personal / Family Issue"
-              },
-              {
+                Description: "Personal / Family Issue"
+            },
+            {
                 type: 'Late',
                 ReasonID: 22,
                 Description: "Slept in"
-              },
-              {
+            },
+            {
                 type: 'Late',
                 ReasonID: 24,
                 Description: "Study Leave"
-              },
-              {
+            },
+            {
                 type: 'Late',
-                ReasonID : 23,
+                ReasonID: 23,
                 Description: "Transport Issues"
-              },
-              {
+            },
+            {
                 type: 'Late',
                 ReasonID: 19,
                 Description: "Appointment"
-              }
+            }
         ]
 
-    
+
 
     // Add Buttons to select
     let buttons = '';
@@ -222,9 +289,9 @@ function UI_selector(bool) {
             // Skip the reason
             continue;
         }
-                console.table(reasons[i]);
+        console.table(reasons[i]);
         buttons += '<div class="grid">' + '<input type="radio" class="radiobutton" name="btn_signout" id="btn_' + [i] + '" value="' + reasons[i].ReasonID + '">' + '<label for="btn_' + [i] + '">' + reasons[i].Description + '</label>' + '</div>';
-}
+    }
 
     reason_selector.setHTML(buttons);
 
@@ -257,7 +324,7 @@ function submit(event) {
             setTimeout(function () { document.getElementById('reason-check').hidden = true; }, 2000);
             return;
         }
-        
+
         let ReasonText = document.querySelector('input[name="btn_signout"]:checked').nextElementSibling.innerText.toLowerCase();
         let StudentID = document.getElementById('selector').value;
         let ReasonID = document.querySelector('input[name="btn_signout"]:checked').value
@@ -368,7 +435,7 @@ function signout(data, event) {
             success: function (result) {
                 if (result == true) {
                     // Redirect
-                    setTimeout(function () { location.reload()}, 2000);
+                    setTimeout(function () { location.reload() }, 2000);
                 } else {
                     // hide the form
                     createLog(result)
@@ -387,54 +454,54 @@ function signout(data, event) {
     }
 }
 
-function Late(data){
+function Late(data) {
 
-        // Using the passed data as variables
-        let StudentName = data.StudentName;
-        let StudentID = data.StudentID;
-        let ReasonID = data.ReasonID;            
+    // Using the passed data as variables
+    let StudentName = data.StudentName;
+    let StudentID = data.StudentID;
+    let ReasonID = data.ReasonID;
 
-        success(StudentName, 'signed in');
+    success(StudentName, 'signed in');
 
-            // Put request
-            $.ajax({
-                url: `https://onsitedev.gyc.tas.edu.au/api/2.0/studentLate?id=${StudentID}&reason=${ReasonID}`,
-                method: "GET",
-                dataType: "json",
-                headers: {
-                    "session_id": localStorage.getItem('sessionID')
-                },
-                // log the response
-                success: function (result) {
-                    if (result == true) {
-                        // Hide Form
-                        document.getElementById("form").hidden = true;
-                        // Show the success message
-                        document.getElementById("success").hidden = false;
-                        // Set the text
-                        document.getElementById("message-text").innerHTML = `
+    // Put request
+    $.ajax({
+        url: `https://onsitedev.gyc.tas.edu.au/api/2.0/studentLate?id=${StudentID}&reason=${ReasonID}`,
+        method: "GET",
+        dataType: "json",
+        headers: {
+            "session_id": localStorage.getItem('sessionID')
+        },
+        // log the response
+        success: function (result) {
+            if (result == true) {
+                // Hide Form
+                document.getElementById("form").hidden = true;
+                // Show the success message
+                document.getElementById("success").hidden = false;
+                // Set the text
+                document.getElementById("message-text").innerHTML = `
                         <p>Successfully signed in <a style="color: blue;">${StudentName}</a>`
-                        // Redirect
-                        setTimeout(function () { location.reload()}, 2000);
-                    } else {
-                        console.log(`Would've worked and sent https://onsitedev.gyc.tas.edu.au/api/2.0/studentLate?id=${StudentID}&reason=${ReasonID}`);
-                        // hide the form
-                        createLog(result)
-                        document.getElementById("success").hidden = true;
-                        document.getElementById("form").hidden = true;
-                        // show the success message
-                        document.getElementById("fail").hidden = false;
-                        // set the text 
-                        document.getElementById("message-text").innerHTML = `
+                // Redirect
+                setTimeout(function () { location.reload() }, 2000);
+            } else {
+                console.log(`Would've worked and sent https://onsitedev.gyc.tas.edu.au/api/2.0/studentLate?id=${StudentID}&reason=${ReasonID}`);
+                // hide the form
+                createLog(result)
+                document.getElementById("success").hidden = true;
+                document.getElementById("form").hidden = true;
+                // show the success message
+                document.getElementById("fail").hidden = false;
+                // set the text 
+                document.getElementById("message-text").innerHTML = `
                         <p> An Error has occured. Please try again Later. </p>`
-                        // Redirect to the home page
-                        setTimeout(function () { location.reload()}, 2000);
-                    }
-                }
-            });
+                // Redirect to the home page
+                setTimeout(function () { location.reload() }, 2000);
+            }
+        }
+    });
 }
 
-function signin(){
+function signin() {
     // Get the student ID
     let StudentID = document.getElementById('selector').value;
     let StudentName = document.getElementById('selector').options[document.getElementById('selector').selectedIndex].text;
@@ -452,7 +519,7 @@ function signin(){
         success: function (result) {
             if (result == true) {
                 // add directory
-                setTimeout(function () { location.reload()}, 3000);
+                setTimeout(function () { location.reload() }, 3000);
             } else {
                 // hide the form
                 // disable success message
@@ -466,13 +533,13 @@ function signin(){
                 document.getElementById("message-text").innerHTML = `
                 <p> An Error has occured. Please try again Later. </p>`
                 // Redirect to the home page
-                setTimeout(function () { location.reload()}, 3000);
+                setTimeout(function () { location.reload() }, 3000);
             }
         }
     });
 }
 
-function success(StudentName, action){
+function success(StudentName, action) {
     // Hide all buttons
     document.getElementById("form").hidden = true;
     // Hide back_btn
@@ -483,6 +550,8 @@ function success(StudentName, action){
     window.scrollTo(0, document.body.scrollHeight);
     // show the success message
     document.getElementById("success").hidden = false;
+    // change version to grey
+    document.querySelector('.footer').style.backgroundColor = 'grey';
     // change background to grey
     document.getElementById("wrapper").style.backgroundColor = "grey";
     // Set the text
@@ -490,10 +559,10 @@ function success(StudentName, action){
     <p>Successfully ${action} <a style="color: #00A4E0;">${StudentName}</a>`
 }
 
-function createLog(log){
+function createLog(log) {
     // Save the log to local storage
     // local datetime
-    
+
     let date = new Date();
     let day = date.getDate();
     let month = date.getMonth() + 1;
@@ -510,7 +579,7 @@ function createLog(log){
     localStorage.setItem(`log-${datetime}-${milliseconds}`, JSON.stringify(log));
 }
 
-function heartBeat(){
+function heartBeat() {
     // check if the user is still logged in
 
     let data = {
@@ -536,5 +605,5 @@ function heartBeat(){
         }
     });
 
-    
+
 }
