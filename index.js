@@ -2,6 +2,8 @@ const { app, BrowserWindow, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 // Send a message to the main process
 
+// Add IsDev check
+
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -27,7 +29,6 @@ const createWindow = () => {
     
   }
   , 60000);
-
 
 };
 
