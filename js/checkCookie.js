@@ -30,10 +30,10 @@ function validate_cookie() {
         type: 'POST',
         data: { 'session_id': session_id },
         // if there is an error, redirect to login
-        error: function (response, status, error) {
-            console.log(response.responseText);
+        error: function (response, error) {
+            console.log(`Clean response ${response.responseText}`);
             error = JSON.parse(response.responseText);
-            console.log(error.status);
+            console.log(error);
             $('#loginModal').modal('show');
         },
         success: function (data) {
