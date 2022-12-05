@@ -1,5 +1,5 @@
 # OnSite-Electron
-Written in Electron
+Written in Electron/jquery/vanilla js
 # Application
 OnSite is the client end/frontend for the OnSite API.
 For more info, please read the internal wiki documentation.
