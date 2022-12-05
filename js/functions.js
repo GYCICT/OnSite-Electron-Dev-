@@ -78,6 +78,21 @@ function checkConnectivity(retry) {
     );
 }
 
+function showPassword() {
+    // Show the password
+    let LoginPassword = document.getElementById("LoginPassword");
+    let passWordEye = document.getElementById("showPassword");
+    // change icon to eye-slash
+    if (LoginPassword.type === "password") {
+        LoginPassword.type = "text";
+        passWordEye.className = "fas fa-eye-slash";
+    }
+    else {
+        LoginPassword.type = "password";
+        passWordEye.className = "fas fa-eye";
+    }
+}
+
 function student_actions_show(id) {
     // This function returns the values for the student functions
     // Get the student ID
