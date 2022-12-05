@@ -1,6 +1,6 @@
 {
   "name": "onsite-client",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "description": "Onsite Electron App",
   "main": "index.js",
   "author": "George Dellas",
@@ -12,7 +12,7 @@
     "build": "electron-builder --win --linux -p always"
   },
   "devDependencies": {
-    "electron": "^19.0.0",
+    "electron": "^22.0.0",
     "electron-builder": "^23.6.0"
   },
   "build": {
@@ -59,7 +59,6 @@
     }
   },
   "dependencies": {
-    "electron-is-dev": "^2.0.0",
     "electron-packager": "^17.1.1",
     "electron-updater": "^5.3.0"
   }
