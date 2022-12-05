@@ -1,9 +1,9 @@
 {
   "name": "onsite-client",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Onsite Electron App",
   "main": "index.js",
-  "author": "George Dellas",
+  "author": "George Dellas <gorgdel18@gmail.com>",
   "license": "GPL3",
   "repo": "https://github.com/gorgdel/onsite-electron",
   "scripts": {
@@ -33,21 +33,24 @@
     "win": {
       "target": "nsis"
     },
-    "linux": {
-      "executableName": "onsite-client",
-      "target": "AppImage",
+    "linux":{
+      "appId": "onsite.client",
       "category": "Utility",
       "icon": "img/gyc.png",
       "publish": [
-        "github"
+        {
+          "provider": "github"
+        }
       ],
       "desktop": {
         "Name": "Onsite Client",
         "Comment": "Onsite Client",
-        "executableName": "onsite-client",
-        "Icon": "img/gyc.png",
-        "Terminal": false
-      }
+        "GenericName": "Onsite Client",
+        "Categories": "Utility;"
+      },
+      "target": [{
+        "target": "AppImage"
+      }]
     },
     "nsis": {
       "oneClick": false,
