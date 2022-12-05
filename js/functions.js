@@ -22,7 +22,7 @@ var refresh_btn = new UIChanger('refresh-symbol');
 function checkConnectivity(retry) {
     // Check if the server is online
     $.ajax({
-        url: 'https://onsitedev.gyc.tas.edu.au/',
+        url: 'https://onsite.gyc.tas.edu.au/',
         type: 'GET',
         success: function () {
             // If the server is online
@@ -89,7 +89,7 @@ function student_actions_show(id) {
 
 
     $.ajax({
-        url: `https://onsitedev.gyc.tas.edu.au/api/2.0/studentactions?id=${id}`,
+        url: `https://onsite.gyc.tas.edu.au/api/2.0/studentactions?id=${id}`,
         method: "GET",
         dataType: "json",
         headers: {
@@ -124,7 +124,7 @@ function student_actions_show(id) {
 
 function student() {
     $.ajax({
-        url: "https://onsitedev.gyc.tas.edu.au/api/2.0/studentsearch?search=",
+        url: "https://onsite.gyc.tas.edu.au/api/2.0/studentsearch?search=",
         method: "GET",
         headers: {
             "session_id": localStorage.getItem('sessionID')
@@ -428,7 +428,7 @@ function signout(data, event) {
     if (event == true) {
         // Put request
         $.ajax({
-            url: `https://onsitedev.gyc.tas.edu.au/api/2.0/studentsignout?id=${StudentID}&reason=${ReasonID}&reasontext=${ReasonText}&siteid=${SiteID}`,
+            url: `https://onsite.gyc.tas.edu.au/api/2.0/studentsignout?id=${StudentID}&reason=${ReasonID}&reasontext=${ReasonText}&siteid=${SiteID}`,
             method: "GET",
             dataType: "json",
             headers: {
@@ -468,7 +468,7 @@ function Late(data) {
 
     // Put request
     $.ajax({
-        url: `https://onsitedev.gyc.tas.edu.au/api/2.0/studentLate?id=${StudentID}&reason=${ReasonID}`,
+        url: `https://onsite.gyc.tas.edu.au/api/2.0/studentLate?id=${StudentID}&reason=${ReasonID}`,
         method: "GET",
         dataType: "json",
         headers: {
@@ -487,7 +487,7 @@ function Late(data) {
                 // Redirect
                 setTimeout(function () { location.reload() }, 2000);
             } else {
-                console.log(`Would've worked and sent https://onsitedev.gyc.tas.edu.au/api/2.0/studentLate?id=${StudentID}&reason=${ReasonID}`);
+                console.log(`Would've worked and sent https://onsite.gyc.tas.edu.au/api/2.0/studentLate?id=${StudentID}&reason=${ReasonID}`);
                 // hide the form
                 createLog(result)
                 document.getElementById("success").hidden = true;
@@ -512,7 +512,7 @@ function signin() {
     success(StudentName, 'signed in');
 
     $.ajax({
-        url: `https://onsitedev.gyc.tas.edu.au/api/2.0/studentsignin?id=${StudentID}`,
+        url: `https://onsite.gyc.tas.edu.au/api/2.0/studentsignin?id=${StudentID}`,
         method: "GET",
         dataType: "json",
         headers: {
@@ -594,7 +594,7 @@ function heartBeat() {
 
 
     $.ajax({
-        url: `https://onsitedev.gyc.tas.edu.au/api/2.0/heartbeat.php`,
+        url: `https://onsite.gyc.tas.edu.au/api/2.0/heartbeat.php`,
         method: "POST",
         headers: {
             "session_id": localStorage.getItem('sessionID')
