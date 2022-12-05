@@ -1,4 +1,11 @@
 function validate_cookie() {
+
+    // Prevent the reload from happening
+    // IF ctrl + r is pressed, the cookie will be checked and the page will reload
+
+    // 
+    
+
     $('#loginModal').modal({
         backdrop: 'static',
         keyboard: false
@@ -15,18 +22,13 @@ function validate_cookie() {
     session_id = localStorage.getItem('sessionID');
     // Check for cookie
     if (!session_id) {    
-    
 
         $('#loginModal').modal('show');
     }
 
 
-
-
-
-
     $.ajax({
-        url: 'https://onsitedev.gyc.tas.edu.au/i.php',
+        url: 'https://onsite.gyc.tas.edu.au/i.php',
         type: 'POST',
         data: { 'session_id': session_id },
         // if there is an error, redirect to login
@@ -38,7 +40,10 @@ function validate_cookie() {
         },
         success: function (data) {
             // Two responses come through at the same time
-            console.log(data);
+            let session_id = data.data;
+            console.log(data)
+            // Update the session ID cookie
+            localStorage.setItem('sessionID', session_id);
         }
     });
 

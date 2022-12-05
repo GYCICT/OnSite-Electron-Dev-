@@ -8,6 +8,10 @@ var error = new UIChanger('error');
 var success_text = new UIChanger('successmsg');
 var siteID = new UIChanger('campus');
 
+function browserFingerPrint(){
+}
+
+
 function auth(){
     let key = document.getElementById('LoginPassword').value;
     // Make the expiry date 2 years from now
@@ -19,7 +23,7 @@ function auth(){
 
     // Ajax request with a header to send the key
     $.ajax({
-        url: 'https://onsitedev.gyc.tas.edu.au/api/2.0/auth.php',
+        url: 'https://onsite.gyc.tas.edu.au/api/2.0/auth.php',
         type: 'GET',
         headers: {
             'API-Key': key
