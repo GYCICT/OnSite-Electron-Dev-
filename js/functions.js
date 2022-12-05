@@ -115,12 +115,9 @@ function student_actions_show(id) {
 
             document.getElementById('spinner').hidden = true;
 
-        }, error: function (result) {
-            // Display the json error as an alerrt
-            let r = JSON.parse(result.responseJSON)
-            console.log(r)
-            createLog(r)
-            selector_error.setHTML('<p style="color: red;">' + r.Error + '</p>');
+        }, error: function (){
+            createLog('student_actions_show() failed')
+            selector_error.setHTML('An Error has occured - Student actions could not be loaded <br><br> Refresh the page and try again.')
         }
     });
 }
