@@ -8,8 +8,7 @@ var error = new UIChanger('error');
 var success_text = new UIChanger('successmsg');
 var siteID = new UIChanger('campus');
 
-function browserFingerPrint(){
-}
+
 
 
 function auth(){
