@@ -1,15 +1,14 @@
 function validate_cookie() {
-
-    // Prevent the reload from happening
-    // IF ctrl + r is pressed, the cookie will be checked and the page will reload
-
-    // 
     
+
+    // Prevent reloading
+    reload = false;
 
     $('#loginModal').modal({
         backdrop: 'static',
         keyboard: false
     });
+    
     
     
     $('#campus').select2({
@@ -24,6 +23,16 @@ function validate_cookie() {
     if (!session_id) {    
 
         $('#loginModal').modal('show');
+    }
+
+    if (reload == false) {
+        $(document).keydown(function (e) {
+            if (e.ctrlKey && e.keyCode == 82) {
+                e.preventDefault();
+                console.log('Prevented reload');
+                return false;
+            }
+        });
     }
 
 
@@ -43,6 +52,7 @@ function validate_cookie() {
             let session_id = data.data;
             console.log(data)
             // Update the session ID cookie
+            reload = true;
             localStorage.setItem('sessionID', session_id);
         }
     });

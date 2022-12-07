@@ -1,6 +1,6 @@
 {
   "name": "onsite-client",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Onsite Electron App",
   "main": "index.js",
   "author": "George Dellas <gorgdel18@gmail.com>",
