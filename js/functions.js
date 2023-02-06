@@ -172,13 +172,8 @@ function student() {
             createLog('student() failed')
             selector_error.setHTML('An Error has occured - Students could not be loaded <br> Reloading...')
             // Rerun the function
-            setTimeout(function () {
-                // clear the error
-                selector_error.setHTML('');
-                student();
-            }
-                , 500);
-
+            selector_error.setHTML('');
+            student();
         }
 
     });
