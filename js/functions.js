@@ -69,7 +69,7 @@ function checkConnectivity(retry) {
 
 
         // Prevent escaping the modal
-        
+
 
 
 
@@ -167,13 +167,20 @@ function student() {
                 placeholder: "Select a student",
                 theme: "bootstrap4"
             });
-        }, 
-        error: function(){
+        },
+        error: function () {
             createLog('student() failed')
-            selector_error.setHTML('An Error has occured - Students could not be loaded <br> Refresh the page and try again.')
+            selector_error.setHTML('An Error has occured - Students could not be loaded <br> Reloading...')
+            // Rerun the function
+            setTimeout(function () {
+                // clear the error
+                selector_error.setHTML('');
+                student();
+            }
+                , 500);
 
         }
-    
+
     });
 }
 

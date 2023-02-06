@@ -22,6 +22,7 @@ function validate_cookie() {
     // Check for cookie
     if (!session_id) {    
 
+        $('#form').remove();
         $('#loginModal').modal('show');
     }
 
@@ -46,6 +47,9 @@ function validate_cookie() {
             error = JSON.parse(response.responseText);
             console.log(error);
             $('#loginModal').modal('show');
+            // remove the session ID
+            $('#form').remove();
+            localStorage.removeItem('sessionID');
         },
         success: function (data) {
             // Two responses come through at the same time
