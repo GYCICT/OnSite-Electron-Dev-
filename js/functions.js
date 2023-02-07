@@ -22,18 +22,21 @@ var refresh_btn = new UIChanger('refresh-symbol');
 function checkConnectivity(retry) {
     // Check if the server is online
     $.ajax({
-        url: 'https://onsite.gyc.tas.edu.au/',
+        url: 'https://onsite.gyc.tas.edu.au/api/2.0/',
         type: 'GET',
         success: function () {
             // If the server is online
             // Show the page
+
             console.log('Onsite is connected')
             if (retry == true) {
                 location.reload();
             }
         }
-    }).fail(function () {
+    }).fail(function (error) {
         console.log('Onsite is disconnected')
+        let error_message = error.responseJSON.Error;
+
         // Remove the body element
         document.querySelector('body').remove();
         // Create a new body, append it to the html
@@ -49,8 +52,7 @@ function checkConnectivity(retry) {
                         <h5 class="modal-title" id="connectErrorLabel">⚠️ Error - Unable to connect ⚠️</h5>
                     </div>
                     <div class="modal-body">
-                        <p>OnSite is unable to connect to the server. Please check your internet connection and try again.</p>
-                        <p>If the problem persists, please contact the IT department.</p>
+                        <p>OnSite is unable to connect to the API. <br> Error: ${error_message}</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" onclick="checkConnectivity(true)">Retry</button>
