@@ -22,26 +22,33 @@ var refresh_btn = new UIChanger('refresh-symbol');
 function checkConnectivity(retry) {
     // Check if the server is online
     $.ajax({
-        url: 'https://onsite.gyc.tas.edu.au/api/2.0/',
+        url: 'https://onsite.gyc.tas.edu.au/',
         type: 'GET',
         success: function () {
             // If the server is online
             // Show the page
-
             console.log('Onsite is connected')
+
             if (retry == true) {
                 location.reload();
             }
         }
     }).fail(function (error) {
+
+        // The server isn't actually offline, it's just that the user isn't logged in
+        if (error.status == 401) {
+            $('#loginModal').modal('show');
+            return;
+        }
+
         console.log('Onsite is disconnected')
         let error_message = error.responseJSON.Error;
-
         // Remove the body element
         document.querySelector('body').remove();
         // Create a new body, append it to the html
         let body = document.createElement('body');
         document.querySelector('html').appendChild(body);
+
 
         // Create a new div, append it to the body
         let modal = `
@@ -68,13 +75,6 @@ function checkConnectivity(retry) {
             keyboard: false
         })
         $('#connectError').modal('show');
-
-
-        // Prevent escaping the modal
-
-
-
-
 
     }
     );
@@ -259,12 +259,12 @@ function UI_selector(bool) {
                 Description: "Illness ",
                 DefaultTimeBlocks: -1
             },
-            {
-                type: 'SignOut',
-                ReasonID: 24,
-                Description: "Study Leave ",
-                DefaultTimeBlocks: -1
-            },
+            // {
+            //     type: 'SignOut',
+            //     ReasonID: 24,
+            //     Description: "Study Leave ",
+            //     DefaultTimeBlocks: -1
+            // },
             {
                 type: 'SignOut',
                 ReasonID: 42,
@@ -460,6 +460,7 @@ function signout(data, event) {
             success: function (result) {
                 if (result == true) {
                     // Redirect
+                    console.log(result)
                     setTimeout(function () { location.reload() }, 2000);
                 } else {
                     // hide the form
@@ -568,7 +569,7 @@ function success(StudentName, action) {
     // Hide all buttons
     document.getElementById("form").hidden = true;
     // Hide back_btn
-    refresh_btn.hide();
+    // refresh_btn.hide();
     back_btn.hide();
     // Hide refresh_btn
     // scroll to bottom
