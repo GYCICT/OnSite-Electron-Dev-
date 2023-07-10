@@ -1,10 +1,10 @@
 {
   "name": "onsite-client-dev",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Onsite Electron App (Dev)",
   "main": "index.js",
   "author": "George Dellas",
-  "license": "GPL3",
+  "license": "GPL-3.0",
   "repo": "https://github.com/GYCICT/onsite-electron-dev-",
   "scripts": {
     "start": "electron .",
