@@ -175,7 +175,7 @@ function student() {
             selector_error.setHTML('An Error has occured - Students could not be loaded <br> Reloading...')
             // Rerun the function
             selector_error.setHTML('');
-            // student();
+            student();
         }
 
     });
@@ -259,16 +259,16 @@ function UI_selector(bool) {
                 Description: "Illness ",
                 DefaultTimeBlocks: -1
             },
-            // {
-            //     type: 'SignOut',
-            //     ReasonID: 24,
-            //     Description: "Study Leave ",
-            //     DefaultTimeBlocks: -1
-            // },
             {
                 type: 'SignOut',
-                ReasonID: 42,
-                Description: "Approved absence - See Office Staff ",
+                ReasonID: 43,
+                Description: "Unverified Absence ",
+                DefaultTimeBlocks: -1
+            },
+            {
+                type: 'SignOut',
+                ReasonID: 44,
+                Description: "Moving car (10 minutes only) ",
                 DefaultTimeBlocks: -1
             },
 
