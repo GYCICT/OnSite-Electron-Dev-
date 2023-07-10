@@ -132,6 +132,8 @@ function student_actions_show(id) {
 
             document.getElementById('spinner').hidden = true;
 
+            console.log(result);
+
         }, error: function (result) {
             // Display the json error as an alerrt
             let r = JSON.parse(result.responseJSON)

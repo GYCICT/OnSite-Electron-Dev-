@@ -21,7 +21,6 @@ const createWindow = () => {
 
   win.webContents.executeJavaScript(updateVersion);
 
-
   setInterval(() => {
     autoUpdater.checkForUpdates();
     win.webContents.executeJavaScript('console.log("Checking for updates...")');
