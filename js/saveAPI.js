@@ -22,7 +22,7 @@ function auth(){
 
     // Ajax request with a header to send the key
     $.ajax({
-        url: 'https://onsite.gyc.tas.edu.au/api/2.0/auth.php',
+        url: 'https://onsitedev.gyc.tas.edu.au/api/2.0/auth.php',
         type: 'GET',
         headers: {
             'API-Key': key

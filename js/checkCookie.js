@@ -38,7 +38,7 @@ function validate_cookie() {
 
 
     $.ajax({
-        url: 'https://onsite.gyc.tas.edu.au/i.php',
+        url: 'https://onsitedev.gyc.tas.edu.au/i.php',
         type: 'POST',
         data: { 'session_id': session_id },
         // if there is an error, redirect to login
