@@ -22,7 +22,7 @@ function Login({ init }: LoginProps) {
   const [campus, setCampus] = useState(1);
   const [showPassword, setShowPassword] = useState<boolean>(true);
   const [password, setPassword] = useState<string>(
-    '37a87a01-2625-4b4b-86b0-48807eebefaf',
+    '',
   );
 
   // const handleClose = () => {
