@@ -1,0 +1,4 @@
+- Add Error handling
+- Filter students so there are not multiple occurances of same student
+- Cookie/Refresh/Check connection
++ User Feedback for Sign-In/Sign-Out
