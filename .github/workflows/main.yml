@@ -10,6 +10,14 @@ jobs:
       with:
         node-version: 14
     - name: install dependencies
+      run: npm install @emotion/react
+      run: npm install @emotion/styled
+      run: npm install @mui/icons-material
+      run: npm install @mui/material
+      run: npm install @sweetalert2/themes
+      run: npm install axios
+      run: npm install sweetalert2
+      run: npm install notistack
       run: npm install
     - name: build
       run: npm run package
